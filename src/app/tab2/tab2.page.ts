@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ExpenseService } from '../services/expense.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,7 +9,9 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class Tab2Page {
+  stats$: Observable<{ totalToday: number; total: number }>;
 
-  constructor() {}
-
+  constructor(private expenseService: ExpenseService) {
+    this.stats$ = this.expenseService.getStats();
+  }
 }

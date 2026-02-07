@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "date": "2023-10-26T10:00:00.000Z",
+    "amount": 50.00,
+    "category": "Food",
+    "description": "Lunch at restaurant"
+  },
+  {
+    "id": "2",
+    "date": "2023-10-26T14:30:00.000Z",
+    "amount": 25.50,
+    "category": "Transport",
+    "description": "Uber ride"
+  },
+  {
+    "id": "3",
+    "date": "2023-10-25T09:00:00.000Z",
+    "amount": 120.00,
+    "category": "Groceries",
+    "description": "Weekly grocery shopping"
+  }
+]

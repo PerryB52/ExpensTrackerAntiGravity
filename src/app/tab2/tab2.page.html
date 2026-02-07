@@ -1,17 +1,49 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Statistics
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Statistics</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div *ngIf="(stats$ | async) as stats">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Today</ion-card-subtitle>
+        <ion-card-title>{{ stats.totalToday | currency }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Amount spent today.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Total</ion-card-subtitle>
+        <ion-card-title>{{ stats.total | currency }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Total expenses recorded.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Trends</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div
+          style="height: 200px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+          <p style="color: #757575;">Chart Placeholder</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
