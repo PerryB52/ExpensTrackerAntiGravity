@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>New Expense</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true" [disabled]="!amount || !category">Add</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-list>
+        <ion-item>
+            <ion-input label="Amount" labelPlacement="stacked" type="number" placeholder="0.00"
+                [(ngModel)]="amount"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-select label="Category" labelPlacement="stacked" placeholder="Select Category" [(ngModel)]="category">
+                <ion-select-option *ngFor="let cat of categories$ | async" [value]="cat.name">
+                    {{ cat.name }}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-input label="Description" labelPlacement="stacked" type="text" placeholder="What is this for?"
+                [(ngModel)]="description"></ion-input>
+        </ion-item>
+    </ion-list>
+</ion-content>

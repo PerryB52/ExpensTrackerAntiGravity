@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Expense } from '../models/expense.model';
 import { ExpenseService } from '../services/expense.service';
+import { AddExpenseModalComponent } from '../components/add-expense-modal/add-expense-modal.component';
 
 @Component({
   selector: 'app-tab1',
@@ -15,56 +16,31 @@ export class Tab1Page {
 
   constructor(
     private expenseService: ExpenseService,
-    private alertController: AlertController
+    private modalController: ModalController
   ) {
     this.expenses$ = this.expenseService.getExpenses();
   }
 
-  async presentAddExpenseAlert() {
-    const alert = await this.alertController.create({
-      header: 'New Expense',
-      inputs: [
-        {
-          name: 'amount',
-          type: 'number',
-          placeholder: 'Amount',
-          min: 0
-        },
-        {
-          name: 'category',
-          type: 'text',
-          placeholder: 'Category (e.g., Food)'
-        },
-        {
-          name: 'description',
-          type: 'text',
-          placeholder: 'Description'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Add',
-          handler: (data) => {
-            if (data.amount && data.category) {
-              const newExpense: Expense = {
-                id: '', // Service handles ID
-                date: new Date().toISOString(),
-                amount: parseFloat(data.amount),
-                category: data.category,
-                description: data.description || ''
-              };
-              this.expenseService.addExpense(newExpense);
-            }
-          }
-        }
-      ]
+  async presentAddExpenseModal() {
+    const modal = await this.modalController.create({
+      component: AddExpenseModalComponent
     });
 
-    await alert.present();
+    modal.onWillDismiss().then((data) => {
+      if (data.role === 'confirm') {
+        const expenseData = data.data;
+        const newExpense: Expense = {
+          id: '',
+          date: new Date().toISOString(),
+          amount: parseFloat(expenseData.amount),
+          category: expenseData.category,
+          description: expenseData.description || ''
+        };
+        this.expenseService.addExpense(newExpense);
+      }
+    });
+
+    await modal.present();
   }
 
   deleteExpense(id: string) {
