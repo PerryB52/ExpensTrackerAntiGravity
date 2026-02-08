@@ -72,6 +72,13 @@ export class Tab3Page {
           role: 'cancel'
         },
         {
+          text: 'Delete',
+          cssClass: 'alert-button-delete',
+          handler: () => {
+            this.confirmDeleteCategory(category);
+          }
+        },
+        {
           text: 'Save',
           handler: (data) => {
             if (data.name) {
@@ -84,8 +91,33 @@ export class Tab3Page {
     await alert.present();
   }
 
+  async confirmDeleteCategory(category: Category) {
+    const alert = await this.alertController.create({
+      header: 'Delete Category',
+      message: `Are you sure you want to delete "${category.name}"? This will not remove existing expenses in this category.`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.categoryService.deleteCategory(category.id);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   deleteCategory(id: string) {
-    this.categoryService.deleteCategory(id);
+    // Legacy swipe-to-delete now triggers confirmation (if we want to keep swipe)
+    const category = this.categoryService.categoriesSubject.value.find(c => c.id === id);
+    if (category) {
+      this.confirmDeleteCategory(category);
+    }
   }
 
   toggleTheme(event: any) {

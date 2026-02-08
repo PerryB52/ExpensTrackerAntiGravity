@@ -6,7 +6,7 @@ import { Category } from '../models/category.model';
     providedIn: 'root'
 })
 export class CategoryService {
-    private categoriesSubject = new BehaviorSubject<Category[]>([]);
+    public categoriesSubject = new BehaviorSubject<Category[]>([]);
     public categories$ = this.categoriesSubject.asObservable();
 
     constructor() {
