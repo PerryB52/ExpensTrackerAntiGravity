@@ -30,7 +30,7 @@
       <ion-button (click)="addCategory()" size="small">Add</ion-button>
     </ion-list-header>
     <ion-item-sliding *ngFor="let category of categories$ | async">
-      <ion-item>
+      <ion-item buttonDetail="true" (click)="editCategory(category)" detail="true">
         <ion-icon slot="start" [name]="category.icon || 'bookmark'"></ion-icon>
         <ion-label>{{ category.name }}</ion-label>
       </ion-item>

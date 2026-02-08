@@ -45,4 +45,15 @@ export class CategoryService {
         const updatedCategories = currentCategories.filter(c => c.id !== id);
         this.categoriesSubject.next(updatedCategories);
     }
+
+    updateCategory(id: string, name: string) {
+        const currentCategories = this.categoriesSubject.value;
+        const updatedCategories = currentCategories.map(c => {
+            if (c.id === id) {
+                return { ...c, name: name.trim() };
+            }
+            return c;
+        });
+        this.categoriesSubject.next(updatedCategories);
+    }
 }

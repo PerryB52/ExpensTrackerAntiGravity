@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ExpenseService } from '../services/expense.service';
 import { CategoryService } from '../services/category.service';
+import { Category } from '../models/category.model';
 
 @Component({
   selector: 'app-tab3',
@@ -46,6 +47,35 @@ export class Tab3Page {
           handler: (data) => {
             if (data.name) {
               this.categoryService.addCategory(data.name);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async editCategory(category: Category) {
+    const alert = await this.alertController.create({
+      header: 'Edit Category',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          value: category.name,
+          placeholder: 'Category Name'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Save',
+          handler: (data) => {
+            if (data.name) {
+              this.categoryService.updateCategory(category.id, data.name);
             }
           }
         }
